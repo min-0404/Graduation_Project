@@ -1,10 +1,18 @@
 package Graduation.CardVisor.repository;
 
 import Graduation.CardVisor.domain.Card;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+
 @Repository
-public interface CardRepository extends JpaRepository<Card, Long> {
+@RequiredArgsConstructor
+public class CardRepository {
+    private final EntityManager em;
+
+    public Card find(Long id){
+        return em.find(Card.class, id);
+    }
 
 }
