@@ -10,18 +10,18 @@ import javax.persistence.*;
 public class Card {
 
     @Id
-    @Column(name = "code")
+    @Column(name = "card_code")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "card_name")
     private String name;
 
-    @Column(name = "company")
+    @Column(name = "card_company")
     private String company;
 
-    @Column(name = "type")
+    @Column(name = "card_type")
     private String type;
 
-    @Column(name = "link")
+    @Column(name = "card_link")
     private String link;
 }

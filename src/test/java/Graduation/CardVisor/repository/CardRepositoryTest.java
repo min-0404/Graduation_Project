@@ -14,7 +14,7 @@ class CardRepositoryTest {
 
     @Test
     public void test(){
-        Card card = cardRepository.getById(16L);
-        System.out.println(card.getCompany());
+        Card card = new Card();
+        cardRepository.save(card);
     }
 }

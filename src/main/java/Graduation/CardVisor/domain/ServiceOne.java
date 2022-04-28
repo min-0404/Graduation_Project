@@ -1,16 +1,15 @@
 package Graduation.CardVisor.domain;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "favorite")
+@Entity(name = "serviceone")
 @Data
-public class Favorite {
+public class ServiceOne {
 
     @Id
-    @Column(name = "favorite_id")
+    @Column(name = "serviceone_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,6 +17,6 @@ public class Favorite {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_code")
-    private Card card;
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:object="${card}">
+    <div th:text="*{name}"></div>
+</div>
+<tr th:each="fee_value:${fee_values}">
+    <td th:text="${fee_value.key}"></td>
+    <td th:text="${fee_value.value}"></td>
+</tr>
+<tr th:each="category:${categories}">
+    <td th:text="${category.getName()}"></td>
+</tr>
+</body>
+</html>

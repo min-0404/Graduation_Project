@@ -2,17 +2,14 @@ package Graduation.CardVisor.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "review")
 @Data
 public class Review {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "review_id")
     private Long id;
 
     @Column(name = "score")
@@ -21,10 +18,12 @@ public class Review {
     @Column(name = "short_review")
     private String short_reivew;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_code")
     private Card card;
 
 }

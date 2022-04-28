@@ -12,9 +12,9 @@ import javax.persistence.Id;
 public class Category {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "category_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "category_name")
     private String name;
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
@@ -12,10 +13,14 @@ import java.sql.Date;
 public class Member {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "pw")
+    @Column(name = "member_nickname")
+    private String nickname;
+
+    @Column(name = "member_pw")
     private String pw;
 
     @Column(name = "gender")

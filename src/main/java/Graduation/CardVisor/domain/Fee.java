@@ -2,20 +2,18 @@ package Graduation.CardVisor.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity(name = "fee")
 @Data
 public class Fee {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "fee_id")
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "card_code")
     private Card card;
 
     @Column(name = "am")

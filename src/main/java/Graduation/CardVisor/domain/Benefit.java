@@ -3,20 +3,17 @@ package Graduation.CardVisor.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "benefit")
 @Data
 public class Benefit {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "benefit_id")
     private Long id;
 
-    @Column(name = "type")
+    @Column(name = "benefit_type")
     private String type;
 
     @Column(name = "benefit_1")
@@ -25,13 +22,16 @@ public class Benefit {
     @Column(name = "benefit_2")
     private Integer number2;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_code")
     private Card card;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
 }
