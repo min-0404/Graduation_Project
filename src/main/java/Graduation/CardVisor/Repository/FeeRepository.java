@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface FeeRepository extends JpaRepository<Fee, Long> {
 
-    public Fee getFeeByCardIs(Card card);
+    // card_id 으로 Fee 객체 검색
+    public Fee findFeeByCard_Id(Long id);
 
 }
