@@ -9,15 +9,13 @@ import java.util.List;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-
-    // 발표 때문에 임시로 만들어놓은 것들
+    public Card findCardById(Long id);
     public List<Card> findAllById(Long id);
     public List<Card> findAllByCompany(String company);
     public List<Card> findAllByLink(String link);
     public List<Card> findAllByName(String name);
     public Card findCardByCompany(String company);
     public Card findCardByType(String type);
-    public Card findCardById(Long id);
     public Card findCardByCompany(Long id);
     public Card deleteAllById(Long id);
 }

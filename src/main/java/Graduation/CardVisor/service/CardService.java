@@ -57,19 +57,26 @@ public class CardService {
 
     // 카테고리 객체 가져오기
     public Set<String> getCategoryFromBenefit(Long id){
-        List<Benefit> benefits = benefitRepository.findBenefitByCard_Id(id);
-
+        List<Benefit> benefits = benefitRepository.findAllByCardId(id);
         Set<String> categories = new HashSet<>(); // 중복값 제거를 위해 Set 사용
-
         for (Benefit benefit:benefits) {
              categories.add(benefit.getCategory().getName());
         }
         return categories;
     }
 
+    public List<Benefit> getFilterdBenefit(Long id){
+        return benefitRepository.findAllByCardId(id);
+
+    }
+
+
+
+
+
 
     // 혜택객체의 주요 데이터 추출
-    public Map<String, Object> getWantedBenefits(Benefit benefit){
+    /*public Map<String, Object> getWantedBenefits(Benefit benefit){
 
         Map<String, Object> map = new HashMap<>();
 
@@ -84,12 +91,12 @@ public class CardService {
         else map.put("혜택숫자1", benefit.getNumber1()); // 4. 혜택숫자 추출
 
         return map;
-    }
+    }*/
 
     // 원하는 카드의 모든 혜택 추출 후 Map에 담기
-    public Map<String, Object> showWantedBenefits(Long id) {
+    /*public Map<String, Object> showWantedBenefits(Long id) {
 
-        List<Benefit> benefits = benefitRepository.findBenefitByCard_Id(id);
+        List<Benefit> benefits = benefitRepository.findAllByCardId(id);
 
         Map<String, Object> result = new HashMap<>(); // key: 칼럼명, value: 뿌려줄 값
         Map<String ,Object> finalResult = new HashMap<>(); // key: 카테고리이름, value: result 의 value 집합
@@ -100,6 +107,6 @@ public class CardService {
             count++;
         }
         return finalResult;
-    }
+    }*/
 
 }
