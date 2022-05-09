@@ -2,6 +2,8 @@ package Graduation.CardVisor.service;
 
 
 import Graduation.CardVisor.domain.*;
+import Graduation.CardVisor.domain.benefit.Benefit;
+import Graduation.CardVisor.domain.benefit.BenefitDto;
 import Graduation.CardVisor.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +32,21 @@ public class CardService {
         return cardRepository.findCardById(id);
     }
 
+    public List<Card> singleCard(Long id) {
+        List<Card> list = new ArrayList<>();
+        list.add(cardRepository.findCardById(id));
+        return list;
+    }
+
     // 연회비 객체 가져오기
     public Fee getFee(Long id){
         return feeRepository.findFeeByCard_Id(id);
     }
 
     // 연회비 객체에서 유효값만 가져오기
-    public Map<String, Integer> getFeeValue(Fee fee){
-        Map<String, Integer> store = new HashMap<>(); // key: 회사, value: 연회비
+    public List<Map> getFeeValue(Fee fee){
+//        Map<String, Integer> store = new HashMap<>(); // key: 회사, value: 연회비
+        List<Map> feeList = new ArrayList<>();
         Field[] fields = fee.getClass().getDeclaredFields();
         fields = Arrays.copyOfRange(fields, 2, 42); // id, card_code 칼럼은 제외
         for(Field field : fields) {
@@ -45,14 +54,17 @@ public class CardService {
             try {
                 Integer value = (Integer)field.get(fee);
                 if(value != -1) { // 해당 칼럼값이 -1아닐때만 추가
-                    store.put(field.getName(), value);
+                    Map<String, Object> store = new HashMap<>();
+                    store.put("fee_brand", field.getName());
+                    store.put("pay", value);
+                    feeList.add(store);
                 }
             }
             catch (IllegalAccessException e) {
                 log.info("Reflection Error. {}", e);
             }
         }
-        return store;
+        return feeList;
     }
 
     // 카테고리 객체 가져오기
@@ -65,9 +77,20 @@ public class CardService {
         return categories;
     }
 
-    public List<Benefit> getFilterdBenefit(Long id){
-        return benefitRepository.findAllByCardId(id);
 
+    public List<BenefitDto> getWantedBenefits(Long id) {
+        List<Benefit> rawBenefits = benefitRepository.findAllByCardId(id);
+        List<BenefitDto> filteredBenefits = new ArrayList<>();
+        for(Benefit benefit : rawBenefits) {
+            BenefitDto filtered = new BenefitDto();
+            filtered.setCategoryName(benefit.getCategory().getName());
+            filtered.setBrandName(benefit.getBrand().getNameKorean());
+            filtered.setFeeType(benefit.getType());
+            filtered.setNumberOne(benefit.getNumber1());
+            filtered.setNumberTwo(benefit.getNumber2());
+            filteredBenefits.add(filtered);
+        }
+        return filteredBenefits;
     }
 
 
@@ -108,5 +131,9 @@ public class CardService {
         }
         return finalResult;
     }*/
+
+    public List<Benefit> getBenefits(Long id) {
+        return benefitRepository.findAllByCardId(id);
+    }
 
 }

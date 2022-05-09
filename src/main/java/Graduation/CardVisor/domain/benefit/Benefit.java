@@ -1,6 +1,9 @@
-package Graduation.CardVisor.domain;
+package Graduation.CardVisor.domain.benefit;
 
 
+import Graduation.CardVisor.domain.Brand;
+import Graduation.CardVisor.domain.Card;
+import Graduation.CardVisor.domain.Category;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,10 +20,10 @@ public class Benefit {
     private String type;
 
     @Column(name = "benefit_1")
-    private Integer number1;
+    private Float number1;
 
     @Column(name = "benefit_2")
-    private Integer number2;
+    private Float number2;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_code")
