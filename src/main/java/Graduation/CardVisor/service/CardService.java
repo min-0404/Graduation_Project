@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,25 +28,17 @@ public class CardService {
     private final ServiceTwoRepository serviceTwoRepository;
     private final BenefitRepository benefitRepository;
 
-    // 카드 객체 가져오기
-    public Card getCard(Long id){
-        return cardRepository.findCardById(id);
-    }
-
-    public List<Card> singleCard(Long id) {
+    // 카드 객체를 리스트에 담아 가져오기
+    public List<Card> getCard(Long id) {
         List<Card> list = new ArrayList<>();
         list.add(cardRepository.findCardById(id));
         return list;
     }
 
-    // 연회비 객체 가져오기
-    public Fee getFee(Long id){
-        return feeRepository.findFeeByCard_Id(id);
-    }
 
-    // 연회비 객체에서 유효값만 가져오기
-    public List<Map> getFeeValue(Fee fee){
-//        Map<String, Integer> store = new HashMap<>(); // key: 회사, value: 연회비
+    // 유효한 연회비 데이터 불러오기
+    public List<Map> getFee(Long id){
+        Fee fee = feeRepository.findFeeByCard_Id(id);
         List<Map> feeList = new ArrayList<>();
         Field[] fields = fee.getClass().getDeclaredFields();
         fields = Arrays.copyOfRange(fields, 2, 42); // id, card_code 칼럼은 제외
@@ -55,7 +48,7 @@ public class CardService {
                 Integer value = (Integer)field.get(fee);
                 if(value != -1) { // 해당 칼럼값이 -1아닐때만 추가
                     Map<String, Object> store = new HashMap<>();
-                    store.put("fee_brand", field.getName());
+                    store.put("provider", field.getName());
                     store.put("pay", value);
                     feeList.add(store);
                 }
@@ -68,7 +61,7 @@ public class CardService {
     }
 
     // 카테고리 객체 가져오기
-    public Set<String> getCategoryFromBenefit(Long id){
+    public Set<String> getCategory(Long id){
         List<Benefit> benefits = benefitRepository.findAllByCardId(id);
         Set<String> categories = new HashSet<>(); // 중복값 제거를 위해 Set 사용
         for (Benefit benefit:benefits) {
@@ -78,62 +71,38 @@ public class CardService {
     }
 
 
-    public List<BenefitDto> getWantedBenefits(Long id) {
-        List<Benefit> rawBenefits = benefitRepository.findAllByCardId(id);
-        List<BenefitDto> filteredBenefits = new ArrayList<>();
-        for(Benefit benefit : rawBenefits) {
-            BenefitDto filtered = new BenefitDto();
-            filtered.setCategoryName(benefit.getCategory().getName());
-            filtered.setBrandName(benefit.getBrand().getNameKorean());
-            filtered.setFeeType(benefit.getType());
-            filtered.setNumberOne(benefit.getNumber1());
-            filtered.setNumberTwo(benefit.getNumber2());
-            filteredBenefits.add(filtered);
-        }
-        return filteredBenefits;
+
+    // 혜택 목록 가져오기
+    public List<BenefitDto> getBenefits(Long id) {
+        return benefitRepository.findAllByCardId(id)
+                .stream()
+                .map(it -> benefitToDto(it))
+                .collect(Collectors.toList());
+    }
+
+    // 모든 카드 가져오기
+    public List<Card> getAllCards() {
+        return cardRepository.findAll();
+    }
+
+
+    public Integer getFavoriteCount(Long card_code) {
+        return favoriteRepository.findFavoriteByCard_id(card_code).size();
     }
 
 
 
 
 
-
-    // 혜택객체의 주요 데이터 추출
-    /*public Map<String, Object> getWantedBenefits(Benefit benefit){
-
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("카테고리", benefit.getCategory().getName()); // 1. 카테고리 이름 추출
-        map.put("브랜드", benefit.getBrand().getNameKorean()); // 2. 브랜드이름 추출
-        String benefitType = benefit.getType();
-        map.put("할인타입", benefitType); // 3. 혜택타입 추출
-        if(benefitType == "FBD" || benefitType == "FID" ||benefitType == "FND" ||benefitType == "FGP" ){
-            map.put("혜택숫자1", benefit.getNumber1()); // 4. 혜택숫자 추출
-            map.put("혜택숫자2", benefit.getNumber2());  // 5: 혜택숫자2 (공백 가능)
-        }
-        else map.put("혜택숫자1", benefit.getNumber1()); // 4. 혜택숫자 추출
-
-        return map;
-    }*/
-
-    // 원하는 카드의 모든 혜택 추출 후 Map에 담기
-    /*public Map<String, Object> showWantedBenefits(Long id) {
-
-        List<Benefit> benefits = benefitRepository.findAllByCardId(id);
-
-        Map<String, Object> result = new HashMap<>(); // key: 칼럼명, value: 뿌려줄 값
-        Map<String ,Object> finalResult = new HashMap<>(); // key: 카테고리이름, value: result 의 value 집합
-        int count = 0; // count 란? : 총 혜택의 개수(모든 혜택 뒤에 숫자 하나씩 붙음)
-        for(Benefit benefit: benefits) {
-            result = getWantedBenefits(benefit); // 혜택에 사용할 값만 넣기
-            finalResult.put(benefit.getCategory().getName() + count, result);
-            count++;
-        }
-        return finalResult;
-    }*/
-
-    public List<Benefit> getBenefits(Long id) {
-        return benefitRepository.findAllByCardId(id);
+    //=============================================================================================
+    private BenefitDto benefitToDto(Benefit benefit) {
+        BenefitDto benefitDto = new BenefitDto();
+        benefitDto.setCategoryName(benefit.getCategory().getName());
+        benefitDto.setBrandName(benefit.getBrand().getNameKorean());
+        benefitDto.setFeeType(benefit.getType());
+        benefitDto.setNumberOne(benefit.getNumber1());
+        benefitDto.setNumberTwo(benefit.getNumber2());
+        return benefitDto;
     }
-
+    //============================================================================================
 }
