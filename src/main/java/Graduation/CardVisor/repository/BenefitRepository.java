@@ -1,6 +1,5 @@
 package Graduation.CardVisor.repository;
 
-import Graduation.CardVisor.domain.Benefit;
 import Graduation.CardVisor.domain.benefit.Benefit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

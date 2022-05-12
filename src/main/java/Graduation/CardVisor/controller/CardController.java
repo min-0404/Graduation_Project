@@ -1,11 +1,10 @@
 package Graduation.CardVisor.controller;
 
+import Graduation.CardVisor.domain.ServiceOneDto;
 import Graduation.CardVisor.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -39,18 +38,13 @@ public class CardController {
         store.put("cardAll", cardService.getAllCards());
         return store;
     }
+    @CrossOrigin("http://localhost:3000")
+    @PostMapping("/select")
+    public void getSelections(@RequestBody List<ServiceOneDto> list){
+        for(ServiceOneDto serviceOneDto : list){
+            System.out.println(serviceOneDto.getMemberId());
+            System.out.println(serviceOneDto.getBrandId());
+        }
 
-    @GetMapping("/{card_code}/card_api")
-    public Map<String, Object> showCard(@PathVariable Long card_code) {
-        Map<String, Object> store = new HashMap<>();
-        store.put("card", cardService.getCard(card_code));
-        return store;
-    }
-
-    @GetMapping("/{card_code}/fee_api")
-    public Map<String, Object> showFee(@PathVariable Long card_code) {
-        Map<String, Object> store = new HashMap<>();
-        store.put("fee", cardService.getFee(card_code));
-        return store;
     }
 }
