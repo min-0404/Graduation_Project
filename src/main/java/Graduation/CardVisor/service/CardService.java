@@ -91,6 +91,12 @@ public class CardService {
     }
 
 
+    public void DtoToServiceOne(ServiceOneDto serviceOneDto) {
+        ServiceOne serviceOne = new ServiceOne();
+        serviceOne.setMember(memberRepository.getById(serviceOneDto.getMemberId()));
+        serviceOne.setBrand(brandRepository.getById(serviceOneDto.getBrandId()));
+        serviceOneRepository.save(serviceOne);
+    }
 
 
 

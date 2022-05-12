@@ -38,13 +38,12 @@ public class CardController {
         store.put("cardAll", cardService.getAllCards());
         return store;
     }
+
     @CrossOrigin("http://localhost:3000")
     @PostMapping("/select")
     public void getSelections(@RequestBody List<ServiceOneDto> list){
         for(ServiceOneDto serviceOneDto : list){
-            System.out.println(serviceOneDto.getMemberId());
-            System.out.println(serviceOneDto.getBrandId());
+            cardService.DtoToServiceOne(serviceOneDto);
         }
-
     }
 }
