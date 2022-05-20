@@ -24,4 +24,8 @@ public class Card {
 
     @Column(name = "card_link")
     private String link;
+
+    @Column(name = "card_company_eng")
+    private String company_eng;
+
 }

@@ -1,4 +1,4 @@
-package Graduation.CardVisor.domain;
+package Graduation.CardVisor.domain.serviceone;
 
 
 import lombok.AllArgsConstructor;
@@ -11,5 +11,5 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 public class ServiceOneDto {
     private Long memberId;
-    private Long brandId;
+    private String brandName;
 }
