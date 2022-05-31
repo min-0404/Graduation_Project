@@ -1,6 +1,7 @@
 package Graduation.CardVisor.controller;
 
 
+import Graduation.CardVisor.domain.serviceone.ServiceOneCardsDto;
 import Graduation.CardVisor.domain.serviceone.ServiceOneDto;
 import Graduation.CardVisor.service.BenefitService;
 import Graduation.CardVisor.service.CardService;
@@ -28,7 +29,7 @@ public class BenefitController {
     private final BenefitService benefitService;
 
 
-    public List<Long> serviceOneCards() {
+    public ServiceOneCardsDto serviceOneCards() {
         var uri = UriComponentsBuilder.fromUriString("http://localhost:5001")
                 .build()
                 .encode()
@@ -37,7 +38,7 @@ public class BenefitController {
         var headers = new HttpHeaders();
         var httpEntity = new HttpEntity<>(headers);
 
-        var responseType = new ParameterizedTypeReference<List<Long>>(){};
+        var responseType = new ParameterizedTypeReference<ServiceOneCardsDto>(){};
         var responseEntity = new RestTemplate().exchange(
                 uri,
                 HttpMethod.GET,
@@ -47,7 +48,8 @@ public class BenefitController {
         return responseEntity.getBody();
     }
 
-    public List<Long> results = new ArrayList<>();
+    ServiceOneCardsDto results = new ServiceOneCardsDto();
+
 
     // 추천 서비스 1 : 선택된 혜택들을 받아주는 컨트롤러
     @CrossOrigin("http://localhost:3000") // method: post 로 받을 시 꼭 붙여줄 것
@@ -62,12 +64,7 @@ public class BenefitController {
     }
 
     @GetMapping("/results")
-    public List<Long> results() {
-
-        for(Long result : results) {
-            System.out.println(result);
-        }
-
+    public ServiceOneCardsDto results() {
         return results;
     }
 
