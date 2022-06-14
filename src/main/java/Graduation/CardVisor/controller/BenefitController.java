@@ -23,7 +23,7 @@ public class BenefitController {
     private final BenefitService benefitService;
 
 
-    // 추천 서비스 1 : 선택된 혜택들을 받아주는 컨트롤러
+    // 추천 서비스 1 : 프론트에서 선택된 혜택들을 받아주는 컨트롤러
     @CrossOrigin("http://localhost:3000") // method: post 로 받을 시 꼭 붙여줄 것
     @PostMapping("/select")
     public void getSelections(@RequestBody List<ServiceOneDto> list){ // [{"memberId" : 1, "brandName": transport_bus}, {}, {}...] 형식으로 담겨져옴
