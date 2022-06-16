@@ -100,7 +100,7 @@ public class CardService {
         BenefitDto benefitDto = new BenefitDto();
 
         benefitDto.setCategoryName(benefit.getCategory().getName());
-        benefitDto.setBrandName(benefit.getBrand().getNameKorean());
+        benefitDto.setBrandName(benefit.getBrand().getNameEngish());
         benefitDto.setFeeType(benefit.getType());
         benefitDto.setNumberOne(benefit.getNumber1());
         benefitDto.setNumberTwo(benefit.getNumber2());
