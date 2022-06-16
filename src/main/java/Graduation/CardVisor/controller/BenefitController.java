@@ -41,7 +41,7 @@ public class BenefitController {
 
         store.put("bestCardBenefits", benefitService.bestCardBenefits());
 
-        store.put("likeCount", benefitService.bestCardLikeCount());
+        //store.put("likeCount", benefitService.bestCardLikeCount());
 
         return store;
 
