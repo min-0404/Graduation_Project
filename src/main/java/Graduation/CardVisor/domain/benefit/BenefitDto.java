@@ -11,6 +11,7 @@ public class BenefitDto {
 
     private String categoryName;
     private String brandName;
+    private String brandNameKor;
     private String feeType;
     private Float numberOne;
     private Float numberTwo;

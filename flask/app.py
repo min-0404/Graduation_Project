@@ -10,7 +10,7 @@ from flask_restful import Api, Resource
 def db_connector(sql):
     db = pymysql.connect(
         host='127.0.0.1',
-        port=3306,
+        port=3307,
         user='root',
         passwd='root',
         db='cardvisor_beta3',
@@ -98,6 +98,9 @@ class cards(Resource):
         # 추출된 'brand_id' 값 칼럼을 members_choice에서 제거
         for col in trash:
             members_choice = members_choice.drop(columns=[col])
+
+        members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('bool')
+        members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('int')
 
         # 결과 확인
         print(members_choice)
