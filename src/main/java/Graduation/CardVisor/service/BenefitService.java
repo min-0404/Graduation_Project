@@ -34,6 +34,7 @@ public class BenefitService {
     private final ServiceOneRepository serviceOneRepository;
     private final ServiceTwoRepository serviceTwoRepository;
     private final BenefitRepository benefitRepository;
+    private final DtoService dtoService;
 
 
     // 알아둘 것!!!!!!!!!!!!!!!!!!!!!!
@@ -49,23 +50,14 @@ public class BenefitService {
 
         // 1단계: 일단, 프론트엔드에서 받아온 ServiceOneDto 를 ServiceOne 객체로 바꿔줘서 데이터베이스에 저장한다.
         for(ServiceOneDto serviceOneDto : list){
-            DtoToServiceOne(serviceOneDto); // Dto 를 정식 ServiceOne 객체로 변환해줌
+            dtoService.DtoToServiceOne(serviceOneDto); // Dto 를 정식 ServiceOne 객체로 변환해줌
         }
 
         // 2단계: Flask 서버가 데이터베이스에 저장된 ServiceOne 데이터를 바탕으로 추천 알고리즘을 실행시키게 하고, 그 결과(ServiceOneCardsDto 형태)를 받아온다.
         resultDto = flaskServiceOne();
     }
 
-    // 추천 서비스1 부가 함수 : 프론트에서 받아온 ServiceOneDto 를 ServiceOne 객체로 바꿔주는 함수
-    public void DtoToServiceOne(ServiceOneDto serviceOneDto) {
 
-        ServiceOne serviceOne = new ServiceOne();
-
-        serviceOne.setMember(memberRepository.getById(serviceOneDto.getMemberId()));
-        serviceOne.setBrand(brandRepository.getByNameEngish(serviceOneDto.getBrandName()));
-
-        serviceOneRepository.save(serviceOne);
-    }
 
 
     // 추천 서비스 1 부가 함수

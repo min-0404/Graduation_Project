@@ -29,6 +29,7 @@ public class CardService {
     private final ServiceOneRepository serviceOneRepository;
     private final ServiceTwoRepository serviceTwoRepository;
     private final BenefitRepository benefitRepository;
+    private final DtoService dtoService;
 
 
     // =================================================================================================================
@@ -90,36 +91,24 @@ public class CardService {
 
         return benefitRepository.findAllByCardId(id)
                 .stream()
-                .map(it -> benefitToDto(it))
+                .map(it -> dtoService.benefitToDto(it))
                 .collect(Collectors.toList());
     }
 
-    // 4-1. Benefit -> BenefitDto 로 변환 (API 서버 -> 프론트로 내려줄 때 Dto 로 바꿔서 내려주기 왜였지??)
-    private BenefitDto benefitToDto(Benefit benefit) {
 
-        BenefitDto benefitDto = new BenefitDto();
-
-        benefitDto.setCategoryName(benefit.getCategory().getName());
-        benefitDto.setBrandName(benefit.getBrand().getNameEngish());
-        benefitDto.setBrandNameKor(benefit.getBrand().getNameKorean());
-        benefitDto.setFeeType(benefit.getType());
-        benefitDto.setNumberOne(benefit.getNumber1());
-        benefitDto.setNumberTwo(benefit.getNumber2());
-
-        return benefitDto;
-    }
     // =================================================================================================================
 
     // <CardController - showAllCards 함수> 에 사용할 함수들
 
     // 1. 모든 카드 리스트에 담기
+    // 얘는 단순 조회용 데이터이므로 Dto 사용x
     public List<Card> getAllCards() {
         return cardRepository.findAll();
     }
     // =================================================================================================================
 
 
-    // 이거 뭐였죠 .... ?
+    // 찜하기 함수 .... 일단 나중에 수정
     public Integer getFavoriteCount(Long card_code) {
         return favoriteRepository.findFavoriteByCard_id(card_code).size();
     }

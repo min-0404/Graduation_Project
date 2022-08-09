@@ -9,11 +9,12 @@ from flask_restful import Api, Resource
 # DB 연결
 def db_connector(sql):
     db = pymysql.connect(
-        host='127.0.0.1',
-        port=3307,
+        host='cardvisor.cb9cyiuocgf2.ap-northeast-2.rds.amazonaws.com',
+        port=3306,
         user='root',
-        passwd='root',
-        db='cardvisor_beta3',
+        passwd='graduation2022',
+        db='cardvisor_rds_beta1',
+        #db='cardvisor_beta3',
         charset='utf8',
         autocommit=True,
         cursorclass=pymysql.cursors.DictCursor
@@ -50,7 +51,7 @@ api = Api(app)
 
 class cards(Resource):
     def get(self):
-        sql = '''SELECT * FROM cardvisor_beta3.serviceOne;'''
+        sql = '''SELECT * FROM cardvisor_rds_beta1.serviceone;'''
         result = db_connector(sql)
         df = pd.DataFrame(result)
 
@@ -80,7 +81,7 @@ class cards(Resource):
 
         # 6000개의 혜택중에 사용자가 선택한 'brand_id'값을 가지고 있는 혜택에서 'card_code'와 'brand_id' 추출
         sql = f"""
-        SELECT card_code, brand_id FROM cardvisor_beta3.benefit
+        SELECT card_code, brand_id FROM cardvisor_rds_beta1.benefit
         WHERE brand_id in {tuple(brands1)}
         """
         options = db_connector(sql)
@@ -143,7 +144,7 @@ class cards(Resource):
 
 
         final = final.sort_values(by=['similarity'], ascending=False)
-        final = final.head(10)
+        final = final.head(20)
 
         # 유사도 높은 상위 10개 항목 출력
         print(final)
