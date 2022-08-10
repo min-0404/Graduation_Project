@@ -12,6 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// API 처리 3가지 case
+// case1. Spring -> React 보내주기
+// case2. React -> Spring 받아주기
+// case3. Flask -> Spring 받아주기
+
+
 @Service
 @RequiredArgsConstructor
 public class DtoService {
@@ -21,11 +27,9 @@ public class DtoService {
     private final ServiceOneRepository serviceOneRepository;
 
 
-    // 백엔드 -> 프론트엔드로 전송하는 경우: 객체명ToDto
+    // case1. Spring -> React 보내주기: 객체명ToDto
 
-
-
-    // 4-1. Benefit -> BenefitDto 로 변환 (API 서버 -> 프론트로 내려줄 때 Dto 로 바꿔서 내려주기 왜였지??)
+    // Benefit -> BenefitDto
     public BenefitDto benefitToDto(Benefit benefit) {
 
         BenefitDto benefitDto = new BenefitDto();
@@ -41,9 +45,9 @@ public class DtoService {
     }
 //---------------------------------------------------------------------------------------------------------------------
 
-    // 프론트엔드 -> 백엔드로 전송받는 경우: DtoTo객체명
+    // case2. React -> Spring 받아주기: DtoTo객체명
 
-    // 추천 서비스1 부가 함수 : 프론트에서 받아온 ServiceOneDto 를 ServiceOne 객체로 바꿔주는 함수
+    // ServiceOneDto -> ServiceOne
     public void DtoToServiceOne(ServiceOneDto serviceOneDto) {
 
         ServiceOne serviceOne = new ServiceOne();
@@ -55,3 +59,7 @@ public class DtoService {
     }
 
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+
+    // case3. Flask -> Spring 받아주기: DtoTo객체명

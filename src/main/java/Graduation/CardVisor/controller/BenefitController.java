@@ -30,6 +30,7 @@ public class BenefitController {
         benefitService.saveSelections(list);
     }
 
+
     // 추천 서비스 1: 추천된 카드들의 정보를 프론트로 전송하는 컨트롤러
     @GetMapping("/results")
     public Map<String, Object> results() {

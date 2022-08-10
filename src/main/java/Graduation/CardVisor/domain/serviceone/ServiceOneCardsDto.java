@@ -2,6 +2,7 @@ package Graduation.CardVisor.domain.serviceone;
 
 
 import lombok.Data;
+import org.springframework.context.annotation.Scope;
 
 import java.util.List;
 

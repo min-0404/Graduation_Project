@@ -35,15 +35,9 @@ public class BenefitService {
     private final ServiceTwoRepository serviceTwoRepository;
     private final BenefitRepository benefitRepository;
     private final DtoService dtoService;
-
-
-    // 알아둘 것!!!!!!!!!!!!!!!!!!!!!!
-    // ServiceOneDto 는 프론트엔드 <-> 스프링 백엔드 : 혜택 데이터 전달
-    // ServiceOneCardsDto 는 스프링 백엔드 <-> 플라스크 백엔드 : 추천된 카드 데이터 전달
+    private final CardService cardService;
 
     private ServiceOneCardsDto resultDto = new ServiceOneCardsDto(); // Flask 서버에서 추천 된 카드들을 받아낼 임시 dto 를 전역변수로 선언
-
-    private final CardService cardService;
 
     // 추천 서비스 1 : select 화면 -> result 화면 으로 넘어가는 클릭 한번으로 1단계와 2단계의 모든 과정이 자동으로 동작해야한다.
     public void saveSelections(List<ServiceOneDto> list){ // [{"memberId" : 1, "brandName": transport_bus}, {}, {}...] 형식으로 담겨져옴
@@ -52,7 +46,6 @@ public class BenefitService {
         for(ServiceOneDto serviceOneDto : list){
             dtoService.DtoToServiceOne(serviceOneDto); // Dto 를 정식 ServiceOne 객체로 변환해줌
         }
-
         // 2단계: Flask 서버가 데이터베이스에 저장된 ServiceOne 데이터를 바탕으로 추천 알고리즘을 실행시키게 하고, 그 결과(ServiceOneCardsDto 형태)를 받아온다.
         resultDto = flaskServiceOne();
     }
@@ -100,7 +93,7 @@ public class BenefitService {
 
 
     public Integer bestCardLikeCount() {
-        return cardService.getFavoriteCount(resultDto.getCards().get(0));
+       return cardService.getFavoriteCount(resultDto.getCards().get(0));
     }
 
 }
