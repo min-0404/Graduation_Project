@@ -18,7 +18,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -37,17 +39,19 @@ public class BenefitService {
     private final DtoService dtoService;
     private final CardService cardService;
 
-    private ServiceOneCardsDto resultDto = new ServiceOneCardsDto(); // Flask 서버에서 추천 된 카드들을 받아낼 임시 dto 를 전역변수로 선언
+//    private ServiceOneCardsDto resultDto = new ServiceOneCardsDto(); // Flask 서버에서 추천 된 카드들을 받아낼 임시 dto 를 전역변수로 선언
 
     // 추천 서비스 1 : select 화면 -> result 화면 으로 넘어가는 클릭 한번으로 1단계와 2단계의 모든 과정이 자동으로 동작해야한다.
-    public void saveSelections(List<ServiceOneDto> list){ // [{"memberId" : 1, "brandName": transport_bus}, {}, {}...] 형식으로 담겨져옴
+    public ServiceOneCardsDto saveSelections(List<ServiceOneDto> list){ // [{"memberId" : 1, "brandName": transport_bus}, {}, {}...] 형식으로 담겨져옴
 
         // 1단계: 일단, 프론트엔드에서 받아온 ServiceOneDto 를 ServiceOne 객체로 바꿔줘서 데이터베이스에 저장한다.
         for(ServiceOneDto serviceOneDto : list){
             dtoService.DtoToServiceOne(serviceOneDto); // Dto 를 정식 ServiceOne 객체로 변환해줌
         }
         // 2단계: Flask 서버가 데이터베이스에 저장된 ServiceOne 데이터를 바탕으로 추천 알고리즘을 실행시키게 하고, 그 결과(ServiceOneCardsDto 형태)를 받아온다.
-        resultDto = flaskServiceOne();
+//        resultDto = flaskServiceOne();
+
+        return flaskServiceOne();
     }
 
 
@@ -76,24 +80,33 @@ public class BenefitService {
     }
 
     // 추천 서비스1 부가 함수: ServiceOneCardsDto 객체의 카드 id를 바탕으로 실제 카드 객체들을 담은 리스트를 반환해주는 함수
-    public List<Card> dtoToRecommendedCards() {
+    public Map<String, Object> dtoToRecommendedCards(List<ServiceOneDto> list) {
+
+        Map<String ,Object> store = new HashMap<>();
+
+        ServiceOneCardsDto resultDto = saveSelections(list);
+
         List<Card> cards = new ArrayList<>();
 
         for (Long cardId : resultDto.getCards()) {
             cards.add(cardRepository.findCardById(cardId));
         }
 
-        return cards;
+        store.put("topTenCards", cards);
+
+        store.put("bestCardBenefits", cardService.getBenefits(resultDto.getCards().get(0)));
+
+        return store;
     }
 
-    // 추천 서비스 1 부가 함수: BestCard 의 혜택들을 뽑아서 리스트에 담아 반환해주는 함수
-    public List<BenefitDto> bestCardBenefits() {
-        return cardService.getBenefits(resultDto.getCards().get(0));
-    }
-
-
-    public Integer bestCardLikeCount() {
-       return cardService.getFavoriteCount(resultDto.getCards().get(0));
-    }
+//    // 추천 서비스 1 부가 함수: BestCard 의 혜택들을 뽑아서 리스트에 담아 반환해주는 함수
+//    public List<BenefitDto> bestCardBenefits() {
+//        return cardService.getBenefits(resultDto.getCards().get(0));
+//    }
+//
+//
+//    public Integer bestCardLikeCount() {
+//       return cardService.getFavoriteCount(resultDto.getCards().get(0));
+//    }
 
 }

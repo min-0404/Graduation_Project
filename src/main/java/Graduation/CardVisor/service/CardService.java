@@ -81,7 +81,7 @@ public class CardService {
         Set<String> categories = new HashSet<>(); // 중복값 제거를 위해 Set 사용
 
         for (Benefit benefit:benefits) {
-             categories.add(benefit.getCategory().getName());
+            categories.add(benefit.getCategory().getName());
         }
 
         return categories;
