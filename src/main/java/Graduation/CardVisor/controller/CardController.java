@@ -9,41 +9,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@Controller
 @RequiredArgsConstructor
+@RequestMapping("/card")
 public class CardController {
 
     private final CardService cardService;
 
-    // 한개의 카드 세부 페이지 컨트롤러
+    // 단일 카드 조회 페이지
     @GetMapping("/{card_code}")
     public Map<String, Object> showCard(@PathVariable Long card_code){
 
-        // 규칙: 컨트롤러 함수의 반환형은 무조건 HashMap<String(이름), Object(객체 및 리스트 및 맵)>
         Map<String, Object> store = new HashMap<>();
-
-        store.put("card", cardService.getCard(card_code)); // <String, 객체>
-
-        store.put("fee", cardService.getFee(card_code)); // <String, Map>
-
-        store.put("category",cardService.getCategory(card_code)); // <String, Set>
-
+        store.put("card", cardService.getCard(card_code)); // {String, Card}
+        store.put("fee", cardService.getFee(card_code)); // {String, Map}
+        store.put("category",cardService.getCategory(card_code)); // {String, Set}
         store.put("benefits", cardService.getBenefits(card_code)); // 모든 혜택 데이터 저장
 
         return store;
     }
 
-    // 모든 카드 목록 페이지 컨트롤러
+    // 모든 카드 조회 페이지
     @GetMapping("/cards")
     public Map<String, Object> showAllCards() {
 
-        // 규칙 : 컨트롤러 함수의 반환형은 무조건 HashMap
         Map<String, Object> store = new HashMap<>();
-
-        store.put("cardAll", cardService.getAllCards()); // <String, List>
+        store.put("cardAll", cardService.getAllCards()); // {String, List}
 
         return store;
     }
-
-
 }

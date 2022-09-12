@@ -1,6 +1,7 @@
 package Graduation.CardVisor.domain;
 
 
+import Graduation.CardVisor.domain.member.Member;
 import lombok.Data;
 
 import javax.persistence.*;

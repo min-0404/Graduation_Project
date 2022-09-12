@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class BenefitDto {
 
     // Spring -> React
-    // serviceone 결과화면에서 "1등 추천 카드"의 정보 중 원하는 정보만 선택해서 내려주기 위한 Dto 객체
-    // servicetwo 결과화면에서 "1등 추천 카드"의 정보 중 원하는 정보만 선택해서 내려주기 위한 Dto 객체
+    // 서비스원, 서비스투 결과 화면에서 "1등 카드"의 필요한 정보만 내려주기 위한 Dto
     private String categoryName;
     private String brandName;
     private String brandNameKor;

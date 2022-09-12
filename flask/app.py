@@ -4,12 +4,15 @@ from flask import Flask, jsonify, request
 from sklearn.metrics.pairwise import cosine_similarity
 from flask_restful import Api, Resource
 
+from flask_cors import CORS
+
+
 # example = '''SELECT * FROM cardvisor_beta3.serviceOne;'''
 
 # DB 연결
 def db_connector(sql):
     db = pymysql.connect(
-        host='cardvisor.cb9cyiuocgf2.ap-northeast-2.rds.amazonaws.com',
+        host='cardvisor.c7yiquq64dzt.ap-northeast-2.rds.amazonaws.com',
         port=3306,
         user='root',
         passwd='graduation2022',
@@ -35,6 +38,8 @@ def non_match_elements(list_a, list_b):
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r'/api/*': {'origins': 'https://localhost:8080'}})
+
 api = Api(app)
 
 
@@ -43,15 +48,15 @@ api = Api(app)
 #     def get(self, word):
 
 #         word = unquote_plus(word)
-#         combined = join_jamos(word)  
+#         combined = join_jamos(word)
 
-#         return {'result' : "%s" % combined} 
+#         return {'result' : "%s" % combined}
 
 
 
 class cards(Resource):
-    def get(self):
-        sql = '''SELECT * FROM cardvisor_rds_beta1.serviceone;'''
+    def get(self, spring_member_id):
+        sql = "SELECT * FROM cardvisor_rds_beta1.serviceone where member_id = {};".format(spring_member_id)
         result = db_connector(sql)
         df = pd.DataFrame(result)
 
@@ -113,11 +118,11 @@ class cards(Resource):
 
         # 'brand_id' 칼럼 제거
         df = df.drop(columns=['brand_id'])
-        
+
         # 'member_id' 칼럼의 값이 전부 1 이므로 해당 칼럼의 value에 맞춰 통일 => 이때 각 'brand_id' 칼럼값들은 sum()
         # 하지만 이때 'card_code'와 'brand' 값이 완전히 중복되는 row들이 있으므로 혜택이 없으면 0이지만 있으면 무조건 1이 아님
         df = df.groupby(['card_code'], as_index=False).sum()
-        
+
         # int -> bool -> int datatype 변환을 거쳐 숫자가 존재하면 전부 1로 교체
         temp = df.loc[:, df.columns != 'card_code'].astype('bool')
         temp = temp.loc[:, temp.columns != 'card_code'].astype('int')
@@ -126,7 +131,7 @@ class cards(Resource):
         # 유사도 계산에 활용될 'card_code', 와 각 브랜드 아이디값 칼럼 dataframe 출력
         print(df)
         recommendable_cards = df.copy()
-        
+
 
         # 코사인 유사도 계산
         final = pd.DataFrame(cosine_similarity(
@@ -156,12 +161,12 @@ class cards(Resource):
 
         cardList = { "cards" : final_cards }
 
-        
+
         # 해당 리스트를 브라우저 화면에 출력
         print(cardList)
         return jsonify(cardList)
 
-api.add_resource(cards, "/")
+api.add_resource(cards, "/api/serviceone/<int:spring_member_id>")
 
 
 if __name__ == "__main__":

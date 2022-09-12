@@ -31,21 +31,16 @@ public class CardService {
     private final BenefitRepository benefitRepository;
     private final DtoService dtoService;
 
+//-----단일 카드 조회-----------------------------------------------------------------------------------------------------
 
-    // =================================================================================================================
-
-    // <CardController - showCard 함수> 에 사용할 함수들
-
-    // 1. 카드 객체 하나를 리스트에 담고 반환하기
+    // 1. id로 Card 객체 조회 후 리스트에 담아 반환
     public List<Card> getCard(Long id) {
-
         List<Card> list = new ArrayList<>();
-
         list.add(cardRepository.findCardById(id));
-
         return list;
     }
-    // 2. 유효한 연회비 데이터 불러오기
+
+    // 2. id로 유효한 Fee 객체 조회 후 리스트에 담아 반환
     public List<Map> getFee(Long id){
 
         Fee fee = feeRepository.findFeeByCard_Id(id);
@@ -73,47 +68,42 @@ public class CardService {
 
         return feeList;
     }
-    // 3. Category 객체 가져오기
+
+    // 3. Category 객체 반환
     public Set<String> getCategory(Long id){
 
         List<Benefit> benefits = benefitRepository.findAllByCardId(id);
-
         Set<String> categories = new HashSet<>(); // 중복값 제거를 위해 Set 사용
 
         for (Benefit benefit:benefits) {
             categories.add(benefit.getCategory().getName());
         }
-
         return categories;
     }
-    // 4. Benefit 목록 가져오기
+
+    // 4. BenefitDto 객체 리스트 반환
     public List<BenefitDto> getBenefits(Long id) {
 
-        return benefitRepository.findAllByCardId(id)
+        return benefitRepository.findAllByCardId(id) // 카드 id로 해당하는 Benefit 객체 리스트 조회 후,
+
+                // 리스트의 Benefit 객체들을 BenefitDto 로 변환 후 반환
                 .stream()
                 .map(it -> dtoService.benefitToDto(it))
                 .collect(Collectors.toList());
     }
 
 
-    // =================================================================================================================
+//-----모든 카드 조회------------------------------------------------------------------------------------------------------
 
-    // <CardController - showAllCards 함수> 에 사용할 함수들
-
-    // 1. 모든 카드 리스트에 담기
-    // 얘는 단순 조회용 데이터이므로 Dto 사용x
+    // 1. 모든 Card 객체 리스트에 담기
     public List<Card> getAllCards() {
         return cardRepository.findAll();
     }
-    // =================================================================================================================
 
 
     // 찜하기 함수 .... 일단 나중에 수정
     public Integer getFavoriteCount(Long card_code) {
         return favoriteRepository.findFavoriteByCard_id(card_code).size();
     }
-
-
-
 
 }

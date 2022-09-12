@@ -1,7 +1,7 @@
 package Graduation.CardVisor.domain.serviceone;
 
 import Graduation.CardVisor.domain.Brand;
-import Graduation.CardVisor.domain.Member;
+import Graduation.CardVisor.domain.member.Member;
 import lombok.Data;
 
 import javax.persistence.*;

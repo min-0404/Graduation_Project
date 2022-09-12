@@ -1,8 +1,13 @@
-package Graduation.CardVisor.domain;
+package Graduation.CardVisor.domain.servicetwo;
+
+import Graduation.CardVisor.domain.Brand;
+import Graduation.CardVisor.domain.member.Member;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity(name = "servicetwo")
+@Data
 public class ServiceTwo {
 
     @Id
