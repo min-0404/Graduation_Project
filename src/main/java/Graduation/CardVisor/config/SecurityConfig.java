@@ -1,11 +1,12 @@
 package Graduation.CardVisor.config;
 
 
-import Graduation.CardVisor.config.jwt.CustomAuthenticationFilter;
-import Graduation.CardVisor.config.jwt.CustomAuthorizationFilter;
+import Graduation.CardVisor.config.jwt.AuthEntryPointJwt;
+import Graduation.CardVisor.config.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,11 +26,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private final AuthEntryPointJwt unauthorizedHandler;
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         // csrf 비활성
         http.csrf().disable();
+
+        http.cors();
+
+        http.exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
 
         // 세션 규칙 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -37,16 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 필터 추가: addFilter 하면, 필터에 정의된 함수들이 자동으로 실행됨
                 .addFilter(corsFilter)
-                .addFilter(new CustomAuthenticationFilter(authenticationManager()))
-                .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-
-                // 시큐리티 디폴트 기능 비활성
-                .formLogin().disable()
-                .httpBasic().disable()
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 // 페이지별 접근 권한 설정
                 .authorizeRequests()
-                .antMatchers("/register", "/main", "/duplicate").permitAll() // 회원가입, 로그인 메뉴, 중복검사는 누구나 접근 가능
+                .antMatchers("/auth/**").permitAll() // 회원가입, 로그인 메뉴, 중복검사는 누구나 접근 가능
                 .antMatchers("/benefit/**", "/card/**", "/member/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin/**")
@@ -59,5 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

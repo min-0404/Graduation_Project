@@ -13,11 +13,15 @@ from flask_cors import CORS
 def db_connector(sql):
     db = pymysql.connect(
         host='cardvisor.c7yiquq64dzt.ap-northeast-2.rds.amazonaws.com',
-        port=3306,
-        user='root',
         passwd='graduation2022',
         db='cardvisor_rds_beta1',
-        #db='cardvisor_beta3',
+
+#         host='localhost',
+#         passwd='root',
+#         db='cardvisor_beta3',
+
+        port=3306,
+        user='root',
         charset='utf8',
         autocommit=True,
         cursorclass=pymysql.cursors.DictCursor
@@ -56,7 +60,11 @@ api = Api(app)
 
 class cards(Resource):
     def get(self, spring_member_id):
-        sql = "SELECT * FROM cardvisor_rds_beta1.serviceone where member_id = {};".format(spring_member_id)
+#         sql = "USE cardvisor_beta3;"
+        sql = "USE cardvisor_rds_beta1;"
+        result = db_connector(sql)
+
+        sql = "SELECT * FROM serviceone where member_id = {};".format(spring_member_id)
         result = db_connector(sql)
         df = pd.DataFrame(result)
 
@@ -86,7 +94,7 @@ class cards(Resource):
 
         # 6000개의 혜택중에 사용자가 선택한 'brand_id'값을 가지고 있는 혜택에서 'card_code'와 'brand_id' 추출
         sql = f"""
-        SELECT card_code, brand_id FROM cardvisor_rds_beta1.benefit
+        SELECT card_code, brand_id FROM benefit
         WHERE brand_id in {tuple(brands1)}
         """
         options = db_connector(sql)
@@ -103,7 +111,7 @@ class cards(Resource):
 
         # 추출된 'brand_id' 값 칼럼을 members_choice에서 제거
         for col in trash:
-            members_choice = members_choice.drop(columns=[col])
+            members_choice = members_choice.drop(columns=col)
 
         members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('bool')
         members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('int')

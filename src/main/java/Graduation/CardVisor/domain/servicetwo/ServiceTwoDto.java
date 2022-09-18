@@ -11,6 +11,6 @@ public class ServiceTwoDto {
     // 사용자가 여러개의 브랜드를 선택하면, 이것들이 모여서 servicetwo 테이블에 저장 됨
     private Long memberId;
     private String brandName;
-    private Integer cost;
+    private Float cost;
 }
 

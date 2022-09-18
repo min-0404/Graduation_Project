@@ -23,5 +23,5 @@ public class ServiceTwo {
     private Brand brand;
 
     @Column(name = "cost")
-    private Integer cost;
+    private Float cost;
 }

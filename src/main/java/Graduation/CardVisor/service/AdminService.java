@@ -20,6 +20,6 @@ public class AdminService {
 
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-        return memberRepository.findByNickname(username).getId();
+        return memberRepository.findByNickname(username).get().getId();
     }
 }

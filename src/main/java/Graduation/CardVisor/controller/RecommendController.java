@@ -21,7 +21,6 @@ import java.util.Map;
 @RequestMapping("/benefit")
 public class RecommendController {
 
-    private final CardService cardService;
     private final RecommendOneService recommendOneService;
     private final RecommendTwoService recommendTwoService;
 

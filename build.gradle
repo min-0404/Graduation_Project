@@ -36,6 +36,12 @@ dependencies {
 	//sql 이쁘게 보기
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
 
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+	// https://mvnrepository.com/artifact/javax.validation/validation-api
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
 }
 
 tasks.named('test') {

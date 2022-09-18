@@ -27,7 +27,7 @@ public class MemberService{
     private final MemberRepository memberRepository;
 
     public Member getMember(String nickname){
-        return memberRepository.findByNickname(nickname);
+        return memberRepository.findByNickname(nickname).get();
     }
 
     public List<Member> getMembers(){

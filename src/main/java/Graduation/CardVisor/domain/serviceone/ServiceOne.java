@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class ServiceOne {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serviceone_id")
     private Long id;
 
