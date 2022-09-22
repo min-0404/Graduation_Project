@@ -1,6 +1,6 @@
 package Graduation.CardVisor.domain.servicetwo;
 
-import Graduation.CardVisor.domain.Brand;
+import Graduation.CardVisor.domain.Category;
 import Graduation.CardVisor.domain.member.Member;
 import lombok.Data;
 
@@ -19,8 +19,8 @@ public class ServiceTwo {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Column(name = "cost")
     private Float cost;

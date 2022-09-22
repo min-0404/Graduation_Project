@@ -7,10 +7,7 @@ import Graduation.CardVisor.domain.serviceone.ServiceOne;
 import Graduation.CardVisor.domain.serviceone.ServiceOneDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwo;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoDto;
-import Graduation.CardVisor.repository.BrandRepository;
-import Graduation.CardVisor.repository.MemberRepository;
-import Graduation.CardVisor.repository.ServiceOneRepository;
-import Graduation.CardVisor.repository.ServiceTwoRepository;
+import Graduation.CardVisor.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,8 @@ public class DtoService {
 
     private final MemberRepository memberRepository;
     private final BrandRepository brandRepository;
+
+    private final CategoryRepository categoryRepository;
     private final ServiceOneRepository serviceOneRepository;
     private final ServiceTwoRepository serviceTwoRepository;
 
@@ -61,7 +60,7 @@ public class DtoService {
 
         ServiceTwo serviceTwo = new ServiceTwo();
         serviceTwo.setMember(memberRepository.getById(id));
-        serviceTwo.setBrand(brandRepository.getByNameEngish(serviceTwoDto.getBrandName()));
+        serviceTwo.setCategory(categoryRepository.getCategoryByName(serviceTwoDto.getCategoryName()));
         serviceTwo.setCost(serviceTwoDto.getCost());
 
         // DB에 저장
