@@ -174,6 +174,72 @@ class cards(Resource):
         print(cardList)
         return jsonify(cardList)
 
+
+    def recommend(id, dataframe):
+        sql = "USE cardvisor_rds_beta1;"
+        result = db_connector(sql)
+        sql = "SELECT * FROM servicetwo where member_id = {};".format(id)
+        result = db_connector(sql)
+        df = pd.DataFrame(result)
+        df = df.drop(columns=['servicetwo_id'])
+        category_dummies = pd.get_dummies(df.category_id)
+        df = pd.concat([df, category_dummies], axis = 'columns')
+        brands1 = df.category_id
+        df = df.drop(columns=['category_id'])
+        df = df.loc[:, df.columns!='cost'].mul(df[df.columns[0]].values.tolist(), axis=0)
+        df['member_id'] = id
+        df = df.groupby(['member_id'], as_index=False).sum()
+        members_choice = df.copy()
+        sql = f"""
+            SELECT card_code, category_id FROM benefit
+            WHERE category_id in {tuple(brands1)}
+            """
+        options = db_connector(sql)
+        df = pd.DataFrame(options)
+        category_dummies = pd.get_dummies(df.category_id)
+        df = pd.concat([df, category_dummies], axis = 'columns')
+        df = df.groupby(['card_code'], as_index=False).sum()
+        df = df.drop(columns = ['category_id'])
+        df['sum'] = df.sum(axis = 1)
+        temp = df['card_code']
+        df = df.loc[:, df.columns!='card_code'].div(df[df.columns[16]].values.tolist(), axis=0)
+        df.insert(0, 'card_code', temp)
+        df = df.drop(columns = ['sum'])
+        recommendable_cards = df.copy()
+        recommendable_cards = recommendable_cards.drop(columns = [7])
+        members_choice = members_choice.drop(columns = [7])
+        final = pd.DataFrame(cosine_similarity(
+        members_choice.loc[:, members_choice.columns != 'member_id'],
+        recommendable_cards.loc[:, recommendable_cards.columns != 'card_code']
+        ),
+        columns = list(recommendable_cards.card_code), index = ['similarity']
+        )
+        final = final.transpose()
+        final = final.sort_values(by=['similarity'], ascending=False)
+        final = final.head(10)
+        final_cards = list(final.index.values)
+        final_cards = list([int(x) for x in final_cards])
+        print(id, ": ", final_cards)
+        dataframe.loc[len(dataframe.index)] = [id, final_cards]
+
+    csv = pd.DataFrame()
+    csv['member_id'] = []
+    csv['cards'] = []
+
+    def start():
+        # year = ['2019', '2020', '2021']
+        year = ['2019']
+        # month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+        month = ['01', '02', '03']
+        age = ['10', '20', '30', '40', '50', '60']
+        gender = ['0', '1']
+        for i in year:
+            for j in month:
+                for k in age:
+                    for l in gender:
+                        member_id = i + j + k + l
+                        recommend(int(member_id), csv)
+
 api.add_resource(cards, "/api/serviceone/<int:spring_member_id>")
 
 
