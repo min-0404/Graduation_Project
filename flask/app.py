@@ -12,7 +12,7 @@ from flask_cors import CORS
 # DB 연결
 def db_connector(sql):
     db = pymysql.connect(
-        host='cardvisor.c7yiquq64dzt.ap-northeast-2.rds.amazonaws.com',
+        host='cardvisor.cebijewyqmq6.ap-northeast-2.rds.amazonaws.com',
         passwd='graduation2022',
         db='cardvisor_rds_beta1',
 
