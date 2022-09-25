@@ -58,7 +58,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     } else {
                         log.error("jwt token validation failed, may have been expired, please Login again.");
                         response.setHeader("error", "jwt token validation failed, may have been expired, please Login again.");
+                        Map<String, String> error = new HashMap<>();
+                        error.put("error_message", "jwt token validation failed, may have been expired, please Login again.");
                         response.setStatus(FORBIDDEN.value());
+                        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                        new ObjectMapper().writeValue(response.getOutputStream(), error);
                     }
                 } catch (Exception exception) {
                     log.error("Error Loggin in: {}", exception.getMessage());

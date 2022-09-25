@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+!**/src/main/java/Graduation/CardVisor/config/CorsConfig.java
+
 
 ### STS ###
 .apt_generated
