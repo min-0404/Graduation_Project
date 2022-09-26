@@ -58,8 +58,12 @@ public class JwtUtils {
 
     public ResponseCookie generateRefreshTokenCookie(UserDetailsImpl userDetails, StringBuffer requestURL) {
         String jwt = generateRefreshTokenFromMember(userDetails, requestURL);
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60)
-                .httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt)
+                .path("/")
+                .maxAge(24 * 60 * 60)
+                .httpOnly(true)
+                .sameSite("None")
+                .build();
         return cookie;
     }
 
@@ -103,7 +107,7 @@ public class JwtUtils {
                 .setIssuedAt(new Date())
 //                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs/120))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-//                .setIssuer(request.getRequestURI().toString())\
+                .setIssuer("cardvisor.ga")
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
