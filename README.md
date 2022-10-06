@@ -31,8 +31,7 @@
 # Technologies and Software Used
 
 #### BackEnd Programming Languages
-<p align="center"><img src="./MD/java.png" height="60">
-<p align="center"><img src="./MD/python.webp" height="60">
+<p align="center"><img src="./MD/java.png" height="60"> <img src="./MD/python.webp" height="60">
 </p>
 <br>
 
@@ -40,10 +39,11 @@
 #### BackEnd Framework
 
 ###### API Server
-<p align="center"><img src="./MD/spring_boot.png" height="60"></p>
-<p align="center"><img src="./MD/jpa.png" height="60"></p>
-<p align="center"><img src="./MD/security.png" height="60"></p>
-<p align="center"><img src="./MD/jwt.png" height="60"></p>
+<p align="center"><img src="./MD/spring_boot.png" height="60">
+<img src="./MD/jpa.png" height="60">
+<img src="./MD/security.png" height="60">
+<img src="./MD/jwt.png" height="60">
+</p>
 <br>
 
 ###### Recommendation Server
@@ -52,21 +52,19 @@
 <br>
 
 #### Data Analysis
-<p align="center"><img src="./MD/mysql.png" height="60"></p>
-<p align="center"><img src="./MD/rds.png" height="60"></p>
+<p align="center"><img src="./MD/mysql.png" height="60"> <img src="./MD/rds.png" height="60"></p>
+</p>
 <br>
 
 #### Data Analysis
-<p align="center"><img src="./MD/selenium.png" height="60">
-<p align="center"><img src="./MD/pandas.png" height="60">
-<p align="center"><img src="./MD/scikitlearn.png" height="60">
+<p align="center"><img src="./MD/selenium.png" height="60"> <img src="./MD/pandas.png" height="60"> <img src="./MD/scikitlearn.png" height="60">
 </p>
 <br>
 
 
 #### Deployment
 <p align="center">
-<img src="./MD/Amazon ec2.png" height="60">
+<img src="./MD/ec2.png" height="60">
 </p>
 <br>
 
@@ -74,7 +72,7 @@
 <p align="center">
 <img src="./MD/git.png" height="50">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src=".MD/github.jpeg" height="50">
+<img src="./MD/github.jpeg" height="50">
 </p>
 <br><br><br>
 <br><br><br>
