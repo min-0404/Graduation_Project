@@ -31,8 +31,8 @@
 # Technologies and Software Used
 
 #### BackEnd Programming Languages
-<p align="center"><img src="./public/MD/CSS.png" height="60">
-<p align="center"><img src="./public/MD/CSS.png" height="60">
+<p align="center"><img src="./MD/java.png" height="60">
+<p align="center"><img src="./MD/python.webp" height="60">
 </p>
 <br>
 
@@ -40,34 +40,41 @@
 #### BackEnd Framework
 
 ###### API Server
-<p align="center"><img src="./public/MD/React.png" height="60">
-</p>
+<p align="center"><img src="./MD/spring_boot.png" height="60"></p>
+<p align="center"><img src="./MD/jpa.png" height="60"></p>
+<p align="center"><img src="./MD/security.png" height="60"></p>
+<p align="center"><img src="./MD/jwt.png" height="60"></p>
 <br>
 
 ###### Recommendation Server
-<p align="center"><img src="./public/MD/React.png" height="60">
+<p align="center"><img src="./MD/flask.png" height="60">
 </p>
 <br>
 
 #### Data Analysis
-<p align="center"><img src="./public/MD/CSS.png" height="60">
-<p align="center"><img src="./public/MD/CSS.png" height="60">
-<p align="center"><img src="./public/MD/CSS.png" height="60">
+<p align="center"><img src="./MD/mysql.png" height="60"></p>
+<p align="center"><img src="./MD/rds.png" height="60"></p>
+<br>
+
+#### Data Analysis
+<p align="center"><img src="./MD/selenium.png" height="60">
+<p align="center"><img src="./MD/pandas.png" height="60">
+<p align="center"><img src="./MD/scikitlearn.png" height="60">
 </p>
 <br>
 
 
 #### Deployment
 <p align="center">
-<img src="./public/MD/Amazon EC2.png" height="60">
+<img src="./MD/Amazon ec2.png" height="60">
 </p>
 <br>
 
 #### Version Control
 <p align="center">
-<img src="./public/MD/Git.png" height="50">
+<img src="./MD/git.png" height="50">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./public/MD/GitHub.png" height="50">
+<img src=".MD/github.jpeg" height="50">
 </p>
 <br><br><br>
 <br><br><br>
