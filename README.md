@@ -11,7 +11,7 @@
 <br><br><br>
 
 # Frontend Repository
-<link href = "https://github.com/NeckyKim/cardvisor">
+[<h3 style="border-bottom: none">https://github.com/NeckyKim/cardvisor</h3>](https://github.com/NeckyKim/cardvisor)
 
 # Backend Team Members
 
