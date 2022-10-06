@@ -39,12 +39,12 @@
 
 #### BackEnd Framework
 
-##### API Server
+###### API Server
 <p align="center"><img src="./public/MD/React.png" height="60">
 </p>
 <br>
 
-##### Recommendation Server
+###### Recommendation Server
 <p align="center"><img src="./public/MD/React.png" height="60">
 </p>
 <br>
