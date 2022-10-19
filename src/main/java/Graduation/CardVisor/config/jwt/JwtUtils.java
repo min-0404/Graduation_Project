@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+// 토큰의 속성 (시크릿키, 만료시간, 헤더 이름) + 토큰 생성 및 토큰 읽는 함수 구현
 @Component
 @RequiredArgsConstructor
 public class JwtUtils {

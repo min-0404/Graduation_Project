@@ -24,6 +24,7 @@ import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
+// API 요청 헤더에 담긴 토큰을 읽고 Authentication 객체에 사용자 권힌 / 아이디 저장
 @Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
 
@@ -81,25 +82,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 
 
-//        try {
-//            String jwt = parseJwt(request);
-//            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-//                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-//
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//
-//                UsernamePasswordAuthenticationToken authenticationToken =
-//                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//
-//                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//
-//                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//            }
-//        } catch (Exception e) {
-//            log.error("Cannot set user authentication: {}", e);
-//        }
-//
-//        filterChain.doFilter(request, response);
     }
 
 

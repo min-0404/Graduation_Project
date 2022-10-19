@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+// 잘못된 권한 접근 시 다음 함수 동작
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
