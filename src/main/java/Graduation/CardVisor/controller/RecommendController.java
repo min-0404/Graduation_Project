@@ -31,10 +31,10 @@ public class RecommendController {
     }
 
     // resultMore -> recommendOneMore
-    @GetMapping("/resultMore")
-    public Map<String, Object> recommendOneMore(){
-        return recommendOneService.recommendMore();
-    }
+//    @GetMapping("/resultMore")
+//    public Map<String, Object> recommendOneMore(){
+//        return recommendOneService.recommendMore();
+//    }
 
     @PostMapping("/recommendTwo")
     public Map<String, Object> recommendTwo(@RequestBody List<ServiceTwoDto> list){

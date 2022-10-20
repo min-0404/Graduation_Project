@@ -1,7 +1,6 @@
 package Graduation.CardVisor.controller;
 
 
-import Graduation.CardVisor.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/member")
 public class MemberController {
 
-    private final AdminService adminService;
 
     @GetMapping("/username")
     public String memberUsername() {
@@ -25,5 +23,4 @@ public class MemberController {
 
         return loggedInUser.getName();
     }
-
 }

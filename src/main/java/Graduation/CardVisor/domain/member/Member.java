@@ -38,6 +38,7 @@ public class Member {
     @Column(name="roles")
     private String roles; // USER 또는 ADMIN
 
+
     // Member 의 role 리스트에 담아 반환
     public List<String> getRolesList() {
         if(this.roles.length() > 0) {

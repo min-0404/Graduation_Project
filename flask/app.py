@@ -169,6 +169,10 @@ class cards(Resource):
 
         cardList = { "cards" : final_cards }
 
+        sql = "DELETE FROM serviceone where member_id = {};".format(spring_member_id)
+        result = db_connector(sql)
+        df = pd.DataFrame(result)
+
 
         # 해당 리스트를 브라우저 화면에 출력
         print(cardList)

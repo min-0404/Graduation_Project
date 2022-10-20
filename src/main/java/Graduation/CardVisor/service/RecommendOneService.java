@@ -2,10 +2,13 @@ package Graduation.CardVisor.service;
 
 
 import Graduation.CardVisor.domain.Card;
+import Graduation.CardVisor.domain.MyCards;
+import Graduation.CardVisor.domain.member.Member;
 import Graduation.CardVisor.domain.serviceone.ServiceOneCardsDto;
 import Graduation.CardVisor.domain.serviceone.ServiceOneDto;
 import Graduation.CardVisor.repository.CardRepository;
 import Graduation.CardVisor.repository.MemberRepository;
+import Graduation.CardVisor.repository.MyCardsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,8 @@ import java.util.Map;
 public class RecommendOneService {
 
     private final MemberRepository memberRepository;
+
+    private final MyCardsRepository myCardsRepository;
     private final DtoService dtoService;
     private final CardRepository cardRepository;
     private final CardService cardService;
@@ -52,6 +57,12 @@ public class RecommendOneService {
         for(Long cardId : resultDto.getCards()){
             cards.add(cardRepository.findCardById(cardId));
         }
+
+        MyCards myCards = new MyCards();
+        myCards.setCard(cards.get(0));
+        myCards.setMember(memberRepository.findMemberById(memberId));
+
+        myCardsRepository.save(myCards);
 
         // 추천된 10개 카드객체와 최고 카드의 Benefit(BenefitDto) 해시맵으로 반환
         Map<String, Object> store = new HashMap<>();
