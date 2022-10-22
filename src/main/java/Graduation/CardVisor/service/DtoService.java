@@ -21,7 +21,6 @@ public class DtoService {
 
     private final MemberRepository memberRepository;
     private final BrandRepository brandRepository;
-
     private final CategoryRepository categoryRepository;
     private final ServiceOneRepository serviceOneRepository;
     private final ServiceTwoRepository serviceTwoRepository;
@@ -56,12 +55,12 @@ public class DtoService {
     }
 
     // ServiceTwoDto -> ServiceTwo
-    public void DtoToServiceTwo(ServiceTwoDto serviceTwoDto, Long id){
+    public void DtoToServiceTwo(ServiceTwoDto serviceTwoDto, Long id, float sum){
 
         ServiceTwo serviceTwo = new ServiceTwo();
         serviceTwo.setMember(memberRepository.getById(id));
-        serviceTwo.setCategory(categoryRepository.getCategoryByName(serviceTwoDto.getCategoryName()));
-        serviceTwo.setCost(serviceTwoDto.getCost());
+        serviceTwo.setCategory(brandRepository.getByNameEngish(serviceTwoDto.getBrandName()).getCategory());
+        serviceTwo.setCost(serviceTwoDto.getCost() / sum);
 
         // DB에 저장
         serviceTwoRepository.save(serviceTwo);

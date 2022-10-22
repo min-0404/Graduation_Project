@@ -33,7 +33,6 @@ import java.util.Map;
 public class RecommendOneService {
 
     private final MemberRepository memberRepository;
-
     private final MyCardsRepository myCardsRepository;
     private final DtoService dtoService;
     private final CardRepository cardRepository;
@@ -58,10 +57,10 @@ public class RecommendOneService {
             cards.add(cardRepository.findCardById(cardId));
         }
 
+        // MyCards 테이블에 최고 카드만 저장
         MyCards myCards = new MyCards();
         myCards.setCard(cards.get(0));
         myCards.setMember(memberRepository.findMemberById(memberId));
-
         myCardsRepository.save(myCards);
 
         // 추천된 10개 카드객체와 최고 카드의 Benefit(BenefitDto) 해시맵으로 반환
@@ -71,6 +70,7 @@ public class RecommendOneService {
         return store;
     }
 
+    // 안쓰임
     public Map<String, Object> recommendMore(){
 
         // 현재 로그인된 계정 확인
