@@ -55,14 +55,22 @@ public class DtoService {
     }
 
     // ServiceTwoDto -> ServiceTwo
-    public void DtoToServiceTwo(ServiceTwoDto serviceTwoDto, Long id, float sum){
+    public void DtoToServiceTwo(ServiceTwoDto serviceTwoDto, Long id){
 
-        ServiceTwo serviceTwo = new ServiceTwo();
-        serviceTwo.setMember(memberRepository.getById(id));
-        serviceTwo.setCategory(brandRepository.getByNameEngish(serviceTwoDto.getBrandName()).getCategory());
-        serviceTwo.setCost(serviceTwoDto.getCost() / sum);
+        ServiceTwo tmp = serviceTwoRepository.findByMemberAndCategory(memberRepository.getById(id), categoryRepository.findByName(serviceTwoDto.getCategoryName()));
 
-        // DB에 저장
-        serviceTwoRepository.save(serviceTwo);
+        if(tmp == null) {
+            ServiceTwo serviceTwo = new ServiceTwo();
+            serviceTwo.setMember(memberRepository.getById(id));
+            serviceTwo.setCategory(categoryRepository.findByName(serviceTwoDto.getCategoryName()));
+            serviceTwo.setCost(serviceTwoDto.getCost());
+            // DB에 저장
+            serviceTwoRepository.save(serviceTwo);
+        } else {
+            ServiceTwo serviceTwo = tmp;
+            serviceTwo.setCost(serviceTwoDto.getCost());
+            // DB에 저장
+            serviceTwoRepository.save(serviceTwo);
+        }
     }
 }

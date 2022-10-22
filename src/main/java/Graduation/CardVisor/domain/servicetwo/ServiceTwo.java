@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class ServiceTwo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "servicetwo_id")
     private Long id;
 

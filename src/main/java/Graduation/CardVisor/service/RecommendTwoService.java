@@ -1,12 +1,14 @@
 package Graduation.CardVisor.service;
 
 import Graduation.CardVisor.domain.Card;
+import Graduation.CardVisor.domain.ColdStart;
 import Graduation.CardVisor.domain.MyCards;
 import Graduation.CardVisor.domain.serviceone.ServiceOne;
 import Graduation.CardVisor.domain.serviceone.ServiceOneCardsDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoCardsDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoDto;
 import Graduation.CardVisor.repository.CardRepository;
+import Graduation.CardVisor.repository.ColdStartRepository;
 import Graduation.CardVisor.repository.MemberRepository;
 import Graduation.CardVisor.repository.MyCardsRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,8 @@ public class RecommendTwoService {
     private final  AdminService adminService;
     private final MyCardsRepository myCardsRepository;
 
+    private final ColdStartRepository coldStartRepository;
+
 //=====서비스투 메인 함수==================================================================================================
 
     public Map<String, Object> recommend(List<ServiceTwoDto> list){
@@ -45,11 +49,9 @@ public class RecommendTwoService {
         // 현재 로그인된 계정 확인
         Long memberId = adminService.authenticate();
 
-        // list 의 cost 합 구하기
-        float sum = serviceTwoSum(list);
 
         // 프론트에서 선택된 혜택들 DB에 저장
-        saveSelections(list, memberId, sum);
+        saveSelections(list, memberId);
 
         // 추천 알고리즘 가동시키고 결과 받기
         ServiceTwoCardsDto resultDto = flaskServiceTwo(memberId);
@@ -60,11 +62,36 @@ public class RecommendTwoService {
             cards.add(cardRepository.findCardById(cardId));
         }
 
+        int rank = 1;
+        if (coldStartRepository.findByMemberId(memberId).isEmpty()) {
+            for(Long cardId : resultDto.getCards()) {
+                ColdStart coldStart = new ColdStart();
+                coldStart.setCardCode(cardId);
+                coldStart.setMemberId(memberId);
+                coldStart.setRank(rank++);
+                coldStartRepository.save(coldStart);
+            }
+            rank = 1;
+        } else {
+//            for (ColdStart x : coldStartRepository.findColdStartByMember_id(memberId)) {
+//                x.setCard_code()
+//            }
+            for(Long cardId : resultDto.getCards()) {
+                ColdStart coldStart = coldStartRepository.findByMemberIdAndRank(memberId, rank);
+                coldStart.setCardCode(cardId);
+                rank++;
+                coldStartRepository.save(coldStart);
+            }
+            rank = 1;
+        }
+
         // MyCards 테이블에 최고 카드만 저장
         MyCards myCards = new MyCards();
         myCards.setCard(cards.get(0));
         myCards.setMember(memberRepository.findMemberById(memberId));
         myCardsRepository.save(myCards);
+
+
 
         // 추천된 10개 카드객체와 최고 카드의 Benefit(BenefitDto) 해시맵으로 반환
         Map<String, Object> store = new HashMap<>();
@@ -98,10 +125,10 @@ public class RecommendTwoService {
 //=====서비스투 보조 함수==================================================================================================
 
     // 프론트에서 선택된 데이터 DB에 저장
-    public void saveSelections(List<ServiceTwoDto> list, Long id, float sum){
+    public void saveSelections(List<ServiceTwoDto> list, Long id){
 
         for(ServiceTwoDto serviceTwoDto : list) {
-            dtoService.DtoToServiceTwo(serviceTwoDto, id, sum);
+            dtoService.DtoToServiceTwo(serviceTwoDto, id);
         }
     }
 
@@ -109,7 +136,7 @@ public class RecommendTwoService {
     public ServiceTwoCardsDto flaskServiceTwo(Long id){
 
         // 요청 보낼 uri 설정
-        var uri = UriComponentsBuilder.fromUriString("http://localhost:5001/api/serviceone/" + id)
+        var uri = UriComponentsBuilder.fromUriString("http://localhost:5001/api/servicetwo/" + id)
                 .build()
                 .encode()
                 .toUri();
@@ -128,11 +155,4 @@ public class RecommendTwoService {
         return responseEntity.getBody();
     }
 
-    public float serviceTwoSum(List<ServiceTwoDto> list){
-        float sum = 0;
-        for(ServiceTwoDto x : list){
-            sum += x.getCost();
-        }
-        return sum;
-    }
 }
