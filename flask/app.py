@@ -85,8 +85,6 @@ class serviceone(Resource):
         # 결과 => member_id : 1, brand_id1 : 1, brand_id2 : 1 , ..... , brand_id(n) : 1
         df = df.groupby(['member_id'], as_index=False).sum()
 
-        # 유사도 계산에 활용될 사용자가 선택한 브랜드값들에 1을 주입한 dataframe 출력 (터미널 확인하기)
-        print(df)
 
         # 브랜드에 대한 혜택이 존재하지 않는 카드가 있을 수 있으니 아직 완성된것은 아니므로 members_choice 변수로 저장해놓음
         members_choice = df.copy()
@@ -100,8 +98,6 @@ class serviceone(Resource):
         options = db_connector(sql)
         df = pd.DataFrame(options)
 
-        # 추출된 값 확인해보기
-        print(df)
 
         # 사용자가 선택한 'brand_id' 중에서 해당 유효성 있는?(1개의 카드라도 해당 혜택 포함) 'brand_id' 값들을 brands2 변수에 저장
         brands2 = df.brand_id
@@ -116,8 +112,6 @@ class serviceone(Resource):
         members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('bool')
         members_choice = members_choice.loc[:, members_choice.columns != 'member_id'].astype('int')
 
-        # 결과 확인
-        print(members_choice)
 
 
         # 'card_code', 'brand_id' dataframe에서 'brand_id' value들을 OneHot Encoding 하여 칼럼화
@@ -136,8 +130,6 @@ class serviceone(Resource):
         temp = temp.loc[:, temp.columns != 'card_code'].astype('int')
         df = pd.concat([df['card_code'], temp], axis='columns')
 
-        # 유사도 계산에 활용될 'card_code', 와 각 브랜드 아이디값 칼럼 dataframe 출력
-        print(df)
         recommendable_cards = df.copy()
 
 
@@ -152,20 +144,12 @@ class serviceone(Resource):
         #칼럼이 데이터를 더 가공하기 쉬우므로 transpose
         final = final.transpose()
 
-        # 전체 유사도 출력
-        print(final)
-
-
         final = final.sort_values(by=['similarity'], ascending=False)
         final = final.head(20)
-
-        # 유사도 높은 상위 10개 항목 출력
-        print(final)
 
         # 유사도 높은 상위 10개 항목의 'card_code' 값을 리스트로 저장 후 출력
         final_cards = list(final.index.values)
         final_cards = list([int(x) for x in final_cards])
-        print(final_cards)
 
         cardList = { "cards" : final_cards }
 
@@ -175,7 +159,7 @@ class serviceone(Resource):
 
 
         # 해당 리스트를 브라우저 화면에 출력
-        print(cardList)
+#         print(cardList)
         return jsonify(cardList)
 
 class servicetwo(Resource):
