@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "my_cards")
 @Data
@@ -25,6 +26,9 @@ public class MyCards {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_code")
     private Card card;
+
+    @JoinColumn(name = "date")
+    private LocalDateTime date;
 
 }
 

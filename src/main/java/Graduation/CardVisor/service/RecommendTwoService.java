@@ -3,8 +3,6 @@ package Graduation.CardVisor.service;
 import Graduation.CardVisor.domain.Card;
 import Graduation.CardVisor.domain.ColdStart;
 import Graduation.CardVisor.domain.MyCards;
-import Graduation.CardVisor.domain.serviceone.ServiceOne;
-import Graduation.CardVisor.domain.serviceone.ServiceOneCardsDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoCardsDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoDto;
 import Graduation.CardVisor.repository.CardRepository;
@@ -17,12 +15,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,6 +86,8 @@ public class RecommendTwoService {
         MyCards myCards = new MyCards();
         myCards.setCard(cards.get(0));
         myCards.setMember(memberRepository.findMemberById(memberId));
+        LocalDateTime localDateTime = LocalDateTime.now();
+        myCards.setDate(localDateTime);
         myCardsRepository.save(myCards);
 
 
