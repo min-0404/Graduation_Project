@@ -1,12 +1,10 @@
 package Graduation.CardVisor.domain.member;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,12 +29,11 @@ public class Member {
     @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "birthday")
-    @JsonFormat(pattern = "yyy/MM/dd")
-    private Date date;
-
     @Column(name="roles")
     private String roles; // USER 또는 ADMIN
+
+    @Column(name = "age")
+    private Age age;
 
 
     // Member 의 role 리스트에 담아 반환
@@ -50,5 +47,9 @@ public class Member {
     // male = 0, female = 1
     public enum Gender {
         male, female
+    }
+
+    public enum Age {
+        one, two, three, four, five, six
     }
 }
