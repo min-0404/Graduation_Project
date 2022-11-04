@@ -2,22 +2,18 @@ package Graduation.CardVisor.service;
 
 
 import Graduation.CardVisor.domain.Card;
-import Graduation.CardVisor.domain.MyCards;
-import Graduation.CardVisor.domain.member.Member;
+import Graduation.CardVisor.domain.mycards.MyCards;
 import Graduation.CardVisor.domain.serviceone.ServiceOneCardsDto;
 import Graduation.CardVisor.domain.serviceone.ServiceOneDto;
 import Graduation.CardVisor.repository.CardRepository;
 import Graduation.CardVisor.repository.MemberRepository;
 import Graduation.CardVisor.repository.MyCardsRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;

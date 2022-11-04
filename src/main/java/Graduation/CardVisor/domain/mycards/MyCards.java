@@ -1,5 +1,6 @@
-package Graduation.CardVisor.domain;
+package Graduation.CardVisor.domain.mycards;
 
+import Graduation.CardVisor.domain.Card;
 import Graduation.CardVisor.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;

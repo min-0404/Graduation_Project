@@ -2,7 +2,7 @@ package Graduation.CardVisor.service;
 
 import Graduation.CardVisor.domain.Card;
 import Graduation.CardVisor.domain.ColdStart;
-import Graduation.CardVisor.domain.MyCards;
+import Graduation.CardVisor.domain.mycards.MyCards;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoCardsDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoDto;
 import Graduation.CardVisor.repository.CardRepository;

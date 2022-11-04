@@ -1,6 +1,4 @@
 package Graduation.CardVisor.service;
-
-
 import Graduation.CardVisor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
