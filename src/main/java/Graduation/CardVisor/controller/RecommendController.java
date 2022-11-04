@@ -3,15 +3,14 @@ package Graduation.CardVisor.controller;
 
 import Graduation.CardVisor.domain.serviceone.ServiceOneDto;
 import Graduation.CardVisor.domain.servicetwo.ServiceTwoDto;
-import Graduation.CardVisor.service.BenefitService;
-import Graduation.CardVisor.service.CardService;
-import Graduation.CardVisor.service.RecommendOneService;
-import Graduation.CardVisor.service.RecommendTwoService;
+import Graduation.CardVisor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +22,7 @@ public class RecommendController {
 
     private final RecommendOneService recommendOneService;
     private final RecommendTwoService recommendTwoService;
+    private final Donuts donuts;
 
     // select -> recommendOne
     @PostMapping("/select")
@@ -44,5 +44,15 @@ public class RecommendController {
     @GetMapping("/recommendTwoMore")
     public Map<String, Object> recommendTwoMore(){
         return recommendTwoService.recommendMore();
+    }
+
+
+    @GetMapping("/donuts")
+    public ResponseEntity<Map<String, List<Float>>> showDonuts(){
+
+        Map<String, List<Float>> donutsMap = new HashMap<>();
+        List<Float> donutsList = donuts.getDonuts();
+        donutsMap.put("result", donutsList);
+        return ResponseEntity.ok().body(donutsMap);
     }
 }
