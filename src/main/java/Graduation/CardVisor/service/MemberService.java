@@ -2,6 +2,7 @@ package Graduation.CardVisor.service;
 
 
 import Graduation.CardVisor.domain.member.Member;
+import Graduation.CardVisor.domain.member.MyInfoDto;
 import Graduation.CardVisor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import java.util.List;
 public class MemberService{
 
     private final MemberRepository memberRepository;
+    private final AdminService adminService;
 
     public Member getMember(String nickname){
         return memberRepository.findByNickname(nickname).get();
@@ -32,5 +34,14 @@ public class MemberService{
 
     public List<Member> getMembers(){
         return memberRepository.findAll();
+    }
+
+    public void changeMyInfo(MyInfoDto myInfoDto)
+    {
+        Long memberId = adminService.authenticate();
+        Member member = memberRepository.findMemberById(memberId);
+        member.setAge(Member.Age.valueOf(myInfoDto.getAge()));
+        member.setGender(Member.Gender.valueOf(myInfoDto.getGender()));
+        memberRepository.save(member);
     }
 }

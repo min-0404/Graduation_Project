@@ -7,7 +7,6 @@ import Graduation.CardVisor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class RecommendController {
 
     private final RecommendOneService recommendOneService;
     private final RecommendTwoService recommendTwoService;
-    private final Donuts donuts;
+    private final DonutsService donutsService;
 
     // select -> recommendOne
     @PostMapping("/select")
@@ -51,7 +50,7 @@ public class RecommendController {
     public ResponseEntity<Map<String, List<Float>>> showDonuts(){
 
         Map<String, List<Float>> donutsMap = new HashMap<>();
-        List<Float> donutsList = donuts.getDonuts();
+        List<Float> donutsList = donutsService.getDonuts();
         donutsMap.put("result", donutsList);
         return ResponseEntity.ok().body(donutsMap);
     }

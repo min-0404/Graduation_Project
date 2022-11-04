@@ -6,20 +6,16 @@ import Graduation.CardVisor.repository.ServiceTwoRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static Graduation.CardVisor.domain.member.Member.Age.one;
 
 @Data
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class Donuts {
+public class DonutsService {
 
     private final ServiceTwoRepository serviceTwoRepository;
     private final AdminService adminService;
