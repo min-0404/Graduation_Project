@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +58,10 @@ public class RecommendOneService {
         MyCards myCards = new MyCards();
         myCards.setCard(cards.get(0));
         myCards.setMember(memberRepository.findMemberById(memberId));
+        LocalDateTime localDateTime = LocalDateTime.now();
+        myCards.setDate(localDateTime);
         myCardsRepository.save(myCards);
+
 
         // 추천된 10개 카드객체와 최고 카드의 Benefit(BenefitDto) 해시맵으로 반환
         Map<String, Object> store = new HashMap<>();
