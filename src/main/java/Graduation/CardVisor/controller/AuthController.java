@@ -9,6 +9,7 @@ import Graduation.CardVisor.domain.member.LoginRequestDto;
 import Graduation.CardVisor.domain.member.Member;
 import Graduation.CardVisor.repository.MemberRepository;
 import Graduation.CardVisor.service.AdminService;
+import Graduation.CardVisor.service.MemberService;
 import Graduation.CardVisor.service.RegisterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,8 @@ public class AuthController {
     private final UserDetailsServiceImpl userDetailsService;
 
     private final AdminService adminService;
+
+    private final MemberService memberService;
 
     private final MemberRepository memberRepository;
 
@@ -91,6 +94,19 @@ public class AuthController {
         ResponseCookie cookie = jwtUtils.getCleanCookie();
         Map<String, Object> store = new HashMap<>();
         store.put("message", "Successfully Changed you password. Please login in again");
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(store);
+    }
+
+    @PostMapping("/resign")
+    public ResponseEntity<?> resign(@Valid @RequestBody Map<String, String> passwordMap, HttpServletRequest request) {
+        Long memberId = adminService.authenticate();
+        Member member = memberRepository.findMemberById(memberId);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(member.getNickname(), passwordMap.get("password")));
+        memberService.withDraw();
+        ResponseCookie cookie = jwtUtils.getCleanCookie();
+        Map<String, Object> store = new HashMap<>();
+        store.put("message", "Resignation Successfull");
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(store);
     }
 
