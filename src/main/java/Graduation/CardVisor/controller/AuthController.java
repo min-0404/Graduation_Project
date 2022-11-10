@@ -4,8 +4,11 @@ package Graduation.CardVisor.controller;
 import Graduation.CardVisor.config.jwt.JwtUtils;
 import Graduation.CardVisor.config.userDetails.UserDetailsImpl;
 import Graduation.CardVisor.config.userDetails.UserDetailsServiceImpl;
+import Graduation.CardVisor.domain.member.ChangePwDto;
 import Graduation.CardVisor.domain.member.LoginRequestDto;
 import Graduation.CardVisor.domain.member.Member;
+import Graduation.CardVisor.repository.MemberRepository;
+import Graduation.CardVisor.service.AdminService;
 import Graduation.CardVisor.service.RegisterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +45,12 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     private final UserDetailsServiceImpl userDetailsService;
+
+    private final AdminService adminService;
+
+    private final MemberRepository memberRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder;
 
     private final JwtUtils jwtUtils;
 
@@ -68,6 +78,20 @@ public class AuthController {
         store.put("roles", roles);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(store);
+    }
+
+    @PostMapping("/changePW")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePwDto changePwDto, HttpServletRequest request) {
+        Long memberId = adminService.authenticate();
+        Member member = memberRepository.findMemberById(memberId);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(member.getNickname(), changePwDto.getOldPw()));
+        member.setPw(passwordEncoder.encode(changePwDto.getNewPw()));
+        memberRepository.save(member);
+        ResponseCookie cookie = jwtUtils.getCleanCookie();
+        Map<String, Object> store = new HashMap<>();
+        store.put("message", "Please login in again");
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(store);
     }
 
     // 회원가입
