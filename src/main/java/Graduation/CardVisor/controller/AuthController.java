@@ -90,7 +90,7 @@ public class AuthController {
         memberRepository.save(member);
         ResponseCookie cookie = jwtUtils.getCleanCookie();
         Map<String, Object> store = new HashMap<>();
-        store.put("message", "Please login in again");
+        store.put("message", "Successfully Changed you password. Please login in again");
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(store);
     }
 
