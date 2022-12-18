@@ -31,8 +31,8 @@ public class JwtUtils {
     @Value("CardVisorSecret")
     private String jwtSecret;
 
-    //@Value("600000")
-	@Value("7200000")
+    @Value("600000")
+//	@Value("7200000")
     private int jwtExpirationMs;
 
     @Value("refreshToken")
