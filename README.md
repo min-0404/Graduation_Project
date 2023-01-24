@@ -2,13 +2,15 @@
 
 <p align="center"><img src="./MD/cardvisor_md.png" width="1200" height="=400"></p>
 
-
-# Deployment in Progress!
-
-### Visit our website to check this project!
-[<h3 style="border-bottom: none">cardvisor.ga</h3>](http://cardvisor.ga)
+<img src="https://user-images.githubusercontent.com/78293352/214280629-ff75b526-d5f2-450f-a204-14c7723d6aab.png" width = "600">
+<b>- 2nd Prize Winner at 2022 Hongik.Univ Graduation Exhibition
+<br>
+- https://www.youtube.com/watch?v=P6AUg1OHlSs</b>
 <br><br><br>
 
+# Visit our website to check this project!
+### [cardvisor.ga](http://cardvisor.ga)
+<br><br>
 
 
 # Frontend Repository
@@ -16,7 +18,7 @@
 <br><br>
 
 
-# Backend Team Members
+# Team Members
 
 #### Name &nbsp; | &nbsp; Minseok Kim
 #### Major &nbsp; | &nbsp; Hongik University Chemical Engineering / Computer Engineering
@@ -30,12 +32,16 @@
 #### Position &nbsp; | &nbsp; Backend Engineer / Data analysis
 <br><br><br>
 
-
+#### Name &nbsp; | &nbsp; Young-Woo Kim
+#### Major &nbsp; | &nbsp; Hongik University Computer Engineering
+#### Team &nbsp; | &nbsp; Cardvisor
+#### Position &nbsp; | &nbsp; Frontend Engineer
+<br><br><br>
 
 # Technologies and Software Used
 
 #### BackEnd Programming Languages
-<p align="center"><img src="./MD/java.png" height="60"> <img src="./MD/python.webp" height="60">
+<p align="center"><img src="./MD/java.png" height="130"&width="60"> <img src="./MD/python.webp" height="120"&width="100">
 </p>
 <br>
 
@@ -43,40 +49,46 @@
 #### BackEnd Framework
 
 ###### API Server
-<p align="center"><img src="./MD/spring_boot.png" height="60">
-<img src="./MD/jpa.png" height="60">
-<img src="./MD/security.png" height="60">
-<img src="./MD/jwt.png" height="60">
+<p align="center"><img src="./MD/spring_boot.png" height="110">
+<img src="./MD/jpa.png" height="110">
+<img src="./MD/security.png" height="110">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./MD/jwt.png" height="110">
 </p>
 <br>
 
 ###### Recommendation Server
-<p align="center"><img src="./MD/flask.png" height="60">
+<p align="center"><img src="./MD/flask.png" height="90">
 </p>
 <br>
 
 #### Data Analysis
-<p align="center"><img src="./MD/mysql.png" height="60"> <img src="./MD/rds.png" height="60"></p>
+<p align="center"><img src="./MD/mysql.png" height="90"> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./MD/rds.png" height="90"></p>
 </p>
 <br>
 
 #### Data Analysis
-<p align="center"><img src="./MD/selenium.png" height="60"> <img src="./MD/pandas.png" height="60"> <img src="./MD/scikitlearn.png" height="60">
+<p align="center"><img src="./MD/selenium.png" height="140"> 
+<img src="./MD/pandas.png" height="140"> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="./MD/scikitlearn.png" height="100">
 </p>
 <br>
 
 
 #### Deployment
 <p align="center">
-<img src="./MD/ec2.png" height="60">
+<img src="./MD/ec2.png" height="130">
 </p>
 <br>
 
 #### Version Control
 <p align="center">
-<img src="./MD/git.png" height="50">
+<img src="./MD/git.png" height="70">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./MD/github.jpeg" height="50">
+<img src="./MD/github.jpeg" height="100">
 </p>
 <br><br><br>
 <br><br><br>
